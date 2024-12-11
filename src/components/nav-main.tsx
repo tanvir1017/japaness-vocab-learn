@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { ChevronRight, LucideProps, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,
@@ -18,21 +18,22 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-
-export function NavMain({
-  items,
-}: {
-  items: {
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+type PropsItem = {
+  title: string;
+  url: string;
+  icon?:
+    | LucideIcon
+    | ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+      >;
+  isActive?: boolean;
+  items?: {
     title: string;
     url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
   }[];
-}) {
+};
+export function NavMain({ items }: { items: PropsItem[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Dashboard Management</SidebarGroupLabel>

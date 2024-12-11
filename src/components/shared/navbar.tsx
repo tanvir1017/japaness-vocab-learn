@@ -3,16 +3,20 @@ import { cn } from "@/lib/utils";
 import { LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { navigationData } from "../app-sidebar";
+
+const ignorePathName = (arrIndex: number) => {
+  return navigationData.navMain[arrIndex].items.map((item) => item?.url);
+};
 const ignoreRoute = [
+  ...ignorePathName(0),
+  ...ignorePathName(1),
   "/dashboard",
   "/authwall/signup",
   "/authwall/signin",
-  "/dashboard/add-lessons",
-  "/dashboard/add-vocabularies",
-  "/dashboard/vocabulary-management",
-  "/dashboard/promote-demote-user",
   "/authwall/forget-password",
 ];
+
 const Navbar = () => {
   const pathName = usePathname();
 

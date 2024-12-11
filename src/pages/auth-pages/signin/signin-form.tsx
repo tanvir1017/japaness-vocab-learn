@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { authenticate } from "@/app/action/action";
-import { Button } from "@/components/ui/button";
+import ServerSubmitButton from "@/components/styled-components/server-submit-button";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRightIcon, InfoIcon } from "lucide-react";
+import { InfoIcon, Loader } from "lucide-react";
 import { useActionState } from "react";
 
 // type TInputs = {
@@ -93,9 +93,15 @@ export function SigninForm() {
                 required
               />
             </div>
-            <Button className="mt-4 w-full" aria-disabled={isPending}>
-              Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-            </Button>
+            <ServerSubmitButton aria-disabled={isPending}>
+              {isPending ? (
+                <span>
+                  <Loader className="animate transition-all" />
+                </span>
+              ) : (
+                "Sign in"
+              )}
+            </ServerSubmitButton>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}

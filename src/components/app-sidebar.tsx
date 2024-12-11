@@ -53,6 +53,11 @@ export const navigationData = {
           url: "/dashboard/add-lessons",
         },
         {
+          title: "View All Lessons",
+          url: "/dashboard/view-all-lessons",
+        },
+        ,
+        {
           title: "Add Vocabularies",
           url: "/dashboard/add-vocabularies",
         },
