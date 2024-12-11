@@ -1,4 +1,4 @@
-const Home = () => {
+const Home = async () => {
   return (
     <div className="bg-primary h-screen flex flex-col items-center justify-center">
       <h1 className="bg-black text-primary  flex items-center justify-center text-xl font-bold p-10">

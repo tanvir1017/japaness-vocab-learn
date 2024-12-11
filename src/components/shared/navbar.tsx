@@ -57,6 +57,7 @@ const Navbar = () => {
               Sign in
             </Link>
           </li>
+
           <li>
             <Link
               className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"

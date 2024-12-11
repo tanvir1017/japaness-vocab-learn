@@ -1,5 +1,5 @@
 "use client";
-import axiosApi from "@/api/axios";
+import { axiosAPI } from "@/api/axios";
 import { useEffect, useState } from "react";
 type Name = {
   firstName: string;
@@ -32,7 +32,7 @@ function LessonsHome() {
 
     const getUsers = async () => {
       try {
-        const response = await axiosApi.get("/lerner", {
+        const response = await axiosAPI.get("/lerner", {
           signal: container.signal,
         });
 
@@ -52,17 +52,7 @@ function LessonsHome() {
       container.abort();
     };
   }, []);
-  const payload = {
-    title: "new post",
-    content: "This is a new post",
-  };
-  const refresh = async () => {
-    const refresh = await axiosApi.post("/posting", payload, {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true, // Important: This allows cookies to be sent
-    });
-    console.log(refresh.data);
-  };
+
   return (
     <div>
       {user?.data.length ? (
@@ -74,7 +64,6 @@ function LessonsHome() {
       ) : (
         <p>no user found</p>
       )}
-      <button onClick={() => refresh()}>refresh</button>
     </div>
   );
 }

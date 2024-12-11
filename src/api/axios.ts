@@ -8,4 +8,5 @@ export const axiosAPI = axios.create({
 export const APIeEndPoints = {
   signInUrl: "/auth/signin",
   signUpUrl: "users/create-lerner",
+  lerner: "/lerner",
 };
