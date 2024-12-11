@@ -1,4 +1,5 @@
 "use client";
+import { APIeEndPoints, axiosAPI } from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,10 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 type TInputs = {
   firstName: string;
   lastName: string;
@@ -27,45 +28,43 @@ export function SignupForm() {
     formState: { errors },
   } = useForm<TInputs>();
 
-  const [gender, setGender] = useState("");
-  const [file, setFile] = useState(null);
+  const [gender, setGender] = useState("male");
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
   const onSubmit: SubmitHandler<TInputs> = async (data) => {
-    console.log(file);
-
-    if (!file) {
-      alert("Please select a file first.");
-      return;
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const lerner = {
-      name: {
-        firstName: data.firstName,
-        lastName: data.lastName,
+    console.log(errors);
+    const bodyData = {
+      lerner: {
+        name: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+        },
+        password: data.password,
+        email: data.email,
+        gender,
       },
-      password: data.password,
-      email: data.email,
-      gender,
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/users/create-lerner",
-        { file: formData, lerner },
+      const response = await axiosAPI.post(
+        APIeEndPoints.signUpUrl,
+        JSON.stringify(bodyData),
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true, // Important: This allows cookies to be sent
         }
       );
 
-      console.log("Signin successful:", response, response.data);
+      const { success, message } = response.data;
+      if (success) {
+        toast(message);
+      } else {
+        toast("something went wrong!!");
+      }
+
+      // Redirect to the home page after successful signup
+      // window.location.href = "/";
     } catch (error) {
-      console.error("Failed to create user:", error);
+      console.log(error);
+      toast(`Failed to create user: ${error}`);
     }
   };
 
@@ -77,11 +76,6 @@ export function SignupForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4 place-content-center">
-            <input type="file" name="image" onChange={handleFileChange} id="" />
-            {/* <div className="size-64 rounded-full border">
-            </div> */}
-          </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="firstName">First Name</Label>

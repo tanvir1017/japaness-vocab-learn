@@ -11,6 +11,7 @@ const ignoreRoute = [
   "/dashboard/add-vocabularies",
   "/dashboard/vocabulary-management",
   "/dashboard/promote-demote-user",
+  "/authwall/forget-password",
 ];
 const Navbar = () => {
   const pathName = usePathname();
