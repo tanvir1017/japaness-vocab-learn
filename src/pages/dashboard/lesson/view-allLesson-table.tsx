@@ -1,5 +1,8 @@
+"use client";
+import { APIeEndPoints, axiosAPI } from "@/api/axios";
 import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
-import { Button } from "@/components/ui/button";
+import { AlertModal } from "@/components/modal-toast/alert-modal";
+import { LessonEditDialog } from "@/components/modal-toast/lesson-edit-modal";
 import {
   Table,
   TableBody,
@@ -9,13 +12,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil, Trash } from "lucide-react";
+import useSWR from "swr";
 
-export function ViewAllLessonTable({
-  lessonList,
-}: {
-  lessonList: TLessonList[];
-}) {
+type TResponseType = {
+  message: string;
+  success: boolean;
+  data: TLessonList[];
+};
+
+const fetcher = (url: string) => axiosAPI.get(url);
+export function ViewAllLessonTable() {
+  const {
+    data: lessonList,
+    error,
+    isLoading,
+  } = useSWR(APIeEndPoints.lesson, fetcher);
+  console.log(lessonList);
+
+  if (error) return "An error has occurred.";
+  if (isLoading) return "Loading...";
   return (
     <Table className="border">
       <TableHeader>
@@ -27,23 +42,20 @@ export function ViewAllLessonTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {lessonList.map((lesson) => (
-          <TableRow key={lesson._id}>
-            <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
-            <TableCell className="">{lesson.title}</TableCell>
-            <TableCell>3</TableCell>
-            <TableCell className="text-right">
-              <div>
-                <Button className="text-xs font-medium text-white ">
-                  <Pencil /> Edit
-                </Button>
-                <Button className="bg-red-500 ml-2 text-xs font-medium text-white ">
-                  <Trash></Trash>Delete
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
+        {lessonList?.data &&
+          lessonList?.data.data.map((lesson: TLessonList) => (
+            <TableRow key={lesson._id}>
+              <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
+              <TableCell className="">{lesson.title}</TableCell>
+              <TableCell>3</TableCell>
+              <TableCell className="text-right">
+                <div className="space-x-2">
+                  <LessonEditDialog lesson={lesson} />
+                  <AlertModal />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
       <TableFooter>
         <TableRow>

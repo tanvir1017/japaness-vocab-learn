@@ -1,46 +1,33 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Modal } from '@/components/ui/modal';
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-interface AlertModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  loading: boolean;
-}
-
-export const AlertModal: React.FC<AlertModalProps> = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  loading
-}) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
-
+export function AlertModal() {
   return (
-    <Modal
-      title="Are you sure?"
-      description="This action cannot be undone."
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <div className="flex w-full items-center justify-end space-x-2 pt-6">
-        <Button disabled={loading} variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-          Continue
-        </Button>
-      </div>
-    </Modal>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="destructive">Delete</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Are you sure to delete this?</DialogTitle>
+          <DialogDescription className="">
+            Remember if you delete this item you won`&lsquo;`t be able to
+            restore
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="flex items-center justify-center space-x-10">
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="destructive"> Yes</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
-};
+}

@@ -1,7 +1,6 @@
-import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
 import { ViewAllLessonTable } from "./view-allLesson-table";
 
-const ViewAllLesson = ({ lessonList }: { lessonList: TLessonList[] }) => {
+const ViewAllLesson = () => {
   return (
     <div className="px-10">
       <div className="border p-1.5">
@@ -11,7 +10,7 @@ const ViewAllLesson = ({ lessonList }: { lessonList: TLessonList[] }) => {
             All lessons are be listed here available on database.
           </p>
         </div>
-        <ViewAllLessonTable lessonList={lessonList} />
+        <ViewAllLessonTable />
       </div>
     </div>
   );

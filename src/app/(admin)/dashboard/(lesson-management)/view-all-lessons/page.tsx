@@ -1,6 +1,4 @@
-import { APIeEndPoints } from "@/api/axios";
 import DashboardHeader from "@/components/dashboard-header";
-import env from "@/config/envalid.env";
 import ViewAllLesson from "@/pages/dashboard/lesson/view-allLesson";
 
 export type TLessonList = {
@@ -20,12 +18,12 @@ export type TLessonResponse = {
 };
 
 const ViewAllLessonPage = async () => {
-  const lesson = await fetch(env.API_BASE_URL + APIeEndPoints.lesson);
-  const { data } = (await lesson.json()) as TLessonResponse;
+  // const lesson = await fetch(env.API_BASE_URL + APIeEndPoints.lesson);
+  // const { data } = (await lesson.json()) as TLessonResponse;
 
   return (
     <DashboardHeader>
-      <ViewAllLesson lessonList={data} />
+      <ViewAllLesson />
     </DashboardHeader>
   );
 };
