@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigationData } from "../app-sidebar";
@@ -62,7 +63,7 @@ const Navbar = () => {
               Sign in
             </Link>
           </li>
-
+          <button onClick={() => signOut()}>Sign Out</button>
           <li>
             <Link
               className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"

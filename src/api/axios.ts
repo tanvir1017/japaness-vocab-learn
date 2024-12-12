@@ -14,6 +14,7 @@ export const APIeEndPoints = {
   signUpUrl: "/users/create-lerner",
   lerner: "/lerner",
   admin: "/admin",
+  users: "/users",
   vocabulary: "/vocabulary",
   lesson: "/lesson",
   tutorial: "/tutorial",

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
+import { UserSession } from "./add-lessons";
 
 export type TVocabularyFormInputs = {
   lesson: string;
@@ -41,7 +42,7 @@ async function addVocabulary(
   }
 }
 
-export default function AddVocabularies() {
+export default function AddVocabularies({ user }: { user: UserSession }) {
   const [lesson, setLesson] = useState(""); // Store selected lessonId
 
   const { trigger, isMutating } = useSWRMutation("/vocabulary", addVocabulary);
@@ -63,11 +64,10 @@ export default function AddVocabularies() {
         return;
       }
 
+      const payload = { ...data, lesson, user: user.data._id };
+
       // Send data to backend
-      await trigger({
-        ...data,
-        lesson,
-      });
+      await trigger(payload);
 
       //mutate(APIeEndPoints.lesson); // Revalidate the lesson list
       toast("Vocabulary added successfully!");

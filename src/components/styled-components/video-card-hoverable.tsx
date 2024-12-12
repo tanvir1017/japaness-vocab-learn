@@ -1,7 +1,9 @@
 "use client";
 import { TutorialApiResponse } from "@/pages/dashboard/tutorial/view-all-tutorials";
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { PlayVideoModal } from "../modal-toast/play-video-modal";
+import { TutorialEditModal } from "../modal-toast/tutorial-edit-modal";
+import { Button } from "../ui/button";
 
 export function VideoHoverAbleCard({
   tutorial,
@@ -28,21 +30,17 @@ export function VideoHoverAbleCard({
           />
         </figure>
         <article className="  p-4 space-y-2">
-          <div className="h-8 w-20 bg-primary rounded-md"></div>
+          <PlayVideoModal url={tutorial.url} />
           <h1 className="text-xl font-semibold capitalize">{tutorial.title}</h1>
           <p className="text-base leading-[120%]">
             Form a legal entity, issue stock, and start accepting payments.
           </p>
-          <a
-            href={tutorial.url}
-            target="_blank"
-            className=" text-base dark:text-white text-blue-600 font-normal  group-hover:opacity-100 opacity-0 translate-y-2 group-hover:translate-y-0 pt-2 flex gap-1  transition-all duration-300  "
-          >
-            Learn about Atlas
-            <span>
-              <ChevronRight />
-            </span>
-          </a>
+          <div className=" text-base dark:text-white text-blue-600 font-normal group-hover:opacity-100 opacity-0 translate-y-2 group-hover:translate-y-0 pt-2 flex gap-1  transition-all duration-300  ">
+            <div className="flex items-center gap-2">
+              <TutorialEditModal tutorial={tutorial} />
+              <Button variant={"destructive"}>Delete</Button>
+            </div>
+          </div>
         </article>
       </div>
     </>

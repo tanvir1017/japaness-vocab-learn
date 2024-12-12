@@ -15,7 +15,27 @@ import { Loader } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
-export default function AddLesson() {
+export type UserSession = {
+  success: boolean;
+  message: string;
+  data: {
+    _id: string;
+    name: {
+      firstName: string;
+      lastName: string;
+      _id: string;
+    };
+    email: string;
+    role: "admin" | "lerner";
+    profileImg: string;
+    gender: "male" | "female" | "other";
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+};
+export default function AddLesson({ user }: { user: UserSession }) {
   const [errorMessage, setErrorMessage] = React.useState<string>("");
 
   const [isPending, setIsPending] = React.useState<boolean>(false);
@@ -29,7 +49,7 @@ export default function AddLesson() {
       // write a axios post to backend
       const response = await axiosAPI.post(
         `${APIeEndPoints.lesson}/create-lesson`,
-        JSON.stringify({ title, lessonNo }),
+        JSON.stringify({ title, lessonNo, user: user.data._id }),
         {
           headers: {
             "Content-Type": "application/json",

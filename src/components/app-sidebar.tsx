@@ -89,8 +89,8 @@ export const navigationData = {
       icon: Users,
       items: [
         {
-          title: "Promote/Demote User",
-          url: "/dashboard/promote-demote-user",
+          title: "View All Users",
+          url: "/dashboard/view-all-users",
         },
       ],
     },

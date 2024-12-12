@@ -101,8 +101,6 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }: any) {
-      console.log("🚀 ~ jwt ~ token:", token);
-      console.log("🚀 ~ jwt ~ user:", user);
       if (user) {
         token.email = user.email;
         token.role = user.role;
@@ -128,4 +126,4 @@ export const authConfig = {
   debug: process.env.NODE_ENV === "development",
 };
 
-export const { auth, handlers } = NextAuth(authConfig);
+export const { auth, signOut, handlers } = NextAuth(authConfig);
