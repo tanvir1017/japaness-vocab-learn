@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 
-import { authenticate } from "@/app/action/action";
 import ServerSubmitButton from "@/components/styled-components/server-submit-button";
 import {
   Card,
@@ -12,46 +11,57 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { InfoIcon, Loader } from "lucide-react";
-import { useActionState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-// type TInputs = {
-//   email: string;
-//   password: string;
-// };
+import type { SignInResponse } from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+type TSignInInputs = {
+  email: string;
+  password: string;
+};
 export function SigninForm() {
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined
-  );
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<TInputs>();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // TODO => Getting all data into onSubmit handler
-  // const onSubmit: SubmitHandler<TInputs> = async (data) => {
-  //   console.log(errors);
-  //   try {
-  //     const response = await axiosAPI.post(
-  //       APIeEndPoints.signInUrl,
-  //       JSON.stringify({ email: data.email, password: data.password }),
-  //       {
-  //         headers: { "Content-Type": "application/json" },
-  //         withCredentials: true, // This  allows cookies to be sent
-  //       }
-  //     );
-  //     const { success, message } = response.data;
-  //     if (success) {
-  //       toast(message);
-  //     } else {
-  //       toast("something went wrong!!");
-  //     }
-  //   } catch (error) {
-  //     toast(`Signin failed: ${error}`);
-  //   }
-  // };
+  const { register, handleSubmit } = useForm<TSignInInputs>();
+
+  async function autSignIn({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    const callbackUrl = searchParams && searchParams.get("callbackUrl");
+    signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    }).then((res: SignInResponse | undefined) => {
+      if (!res) {
+        toast("No response!");
+        return;
+      }
+      if (!res.ok) alert("Something went wrong!");
+      else if (res.error) {
+        console.log("🚀 ~ SigninForm ~ res:", res);
+        if (res.error == "CallbackRouteError")
+          toast("Could not login! Please check your credentials.");
+        else toast(`Internal Server Error: ${res.error}`);
+      } else {
+        if (callbackUrl) router.push(callbackUrl as any);
+        else router.push("/");
+      }
+    });
+  }
+
+  const handleOnSubmitForm: SubmitHandler<TSignInInputs> = async (data) => {
+    console.log(data);
+    await autSignIn({ email: data.email, password: data.password });
+  };
 
   return (
     <Card className="mx-auto max-w-lg w-full">
@@ -62,14 +72,13 @@ export function SigninForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={formAction}>
+        <form onSubmit={handleSubmit(handleOnSubmitForm)}>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                // {...register("email")}
-                name="email"
+                {...register("email", { required: true })}
                 type="email"
                 placeholder="m@example.com"
                 required
@@ -87,40 +96,17 @@ export function SigninForm() {
               </div>
               <Input
                 id="password"
-                // {...register("password")}
-                name="password"
+                {...register("password", { required: true })}
                 type="password"
-                required
               />
             </div>
-            <ServerSubmitButton aria-disabled={isPending}>
-              {isPending ? (
-                <span>
-                  <Loader className="animate transition-all" />
-                </span>
-              ) : (
-                "Sign in"
-              )}
-            </ServerSubmitButton>
+            <ServerSubmitButton>Sign in</ServerSubmitButton>
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
             <Link href="/authwall/signup" className="underline">
               Sign up
             </Link>
-          </div>
-
-          <div
-            className="flex h-8 items-end space-x-1"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {errorMessage && (
-              <>
-                <InfoIcon className="h-5 w-5 text-red-500" />
-                <p className="text-sm text-red-500">{errorMessage}</p>
-              </>
-            )}
           </div>
         </form>
       </CardContent>
