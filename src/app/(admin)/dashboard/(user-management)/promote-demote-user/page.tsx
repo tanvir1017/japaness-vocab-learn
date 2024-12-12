@@ -1,8 +1,11 @@
+import DashboardHeader from "@/components/dashboard-header";
+import PromoteDemoteUserComponent from "@/pages/dashboard/user/promote-demote-user";
+
 const PromoteDemoteusers = () => {
   return (
-    <div>
-      <h1>This is a Promote-demote-user Component</h1>
-    </div>
+    <DashboardHeader>
+      <PromoteDemoteUserComponent />
+    </DashboardHeader>
   );
 };
 

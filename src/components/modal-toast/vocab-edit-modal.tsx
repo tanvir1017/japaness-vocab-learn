@@ -19,6 +19,7 @@ export function VocabEditDialog({ vocab }: { vocab: TVocabulary }) {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
+        <DialogTitle> </DialogTitle>
         <DialogHeader>
           <DialogTitle>Edit the lesson from here</DialogTitle>
           <DialogDescription>

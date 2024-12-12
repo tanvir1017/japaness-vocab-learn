@@ -46,11 +46,6 @@ export default function AddLesson() {
     }
   };
 
-  // const [errorMessage, submitHandler, isPending] = useActionState(
-  //   onSubmitHandler,
-  //   undefined
-  // );
-
   return (
     <div className="px-10">
       <Card className="mx-auto max-w-lg w-full">

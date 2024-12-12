@@ -2,10 +2,11 @@
 
 import {
   AudioWaveform,
+  BookOpenCheck,
   Command,
   GalleryVerticalEnd,
-  Settings2,
-  SquareTerminal,
+  Users,
+  Video,
 } from "lucide-react";
 import * as React from "react";
 
@@ -45,7 +46,7 @@ export const navigationData = {
     {
       title: "Lesson Management",
       url: "#",
-      icon: SquareTerminal,
+      icon: BookOpenCheck,
       isActive: true,
       items: [
         {
@@ -68,9 +69,24 @@ export const navigationData = {
       ],
     },
     {
+      title: "Tutorials Management",
+      url: "#",
+      icon: Video,
+      items: [
+        {
+          title: "Add Tutorial",
+          url: "/dashboard/add-tutorial",
+        },
+        {
+          title: "View All Tutorials",
+          url: "/dashboard/view-all-tutorials",
+        },
+      ],
+    },
+    {
       title: "User Management",
       url: "#",
-      icon: Settings2,
+      icon: Users,
       items: [
         {
           title: "Promote/Demote User",

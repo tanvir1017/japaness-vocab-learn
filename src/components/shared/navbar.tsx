@@ -11,6 +11,7 @@ const ignorePathName = (arrIndex: number) => {
 const ignoreRoute = [
   ...ignorePathName(0),
   ...ignorePathName(1),
+  ...ignorePathName(2),
   "/dashboard",
   "/authwall/signup",
   "/authwall/signin",

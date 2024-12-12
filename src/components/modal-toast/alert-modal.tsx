@@ -15,6 +15,7 @@ export function AlertModal() {
         <Button variant="destructive">Delete</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
+        <DialogTitle> </DialogTitle>
         <DialogHeader>
           <DialogTitle>Are you sure to delete this?</DialogTitle>
           <DialogDescription className="">
@@ -22,7 +23,6 @@ export function AlertModal() {
             restore
           </DialogDescription>
         </DialogHeader>
-
         <div className="flex items-center justify-center space-x-10">
           <Button variant="secondary">Cancel</Button>
           <Button variant="destructive"> Yes</Button>
