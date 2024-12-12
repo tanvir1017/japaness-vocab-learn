@@ -3,13 +3,13 @@ import { redirect } from "next/navigation";
 
 const Home = async () => {
   const session = await auth();
-  console.log("🚀 ~ Home ~ session:", session?.user);
   if (!session?.user) redirect("/authwall/signin");
+  if (session?.user) redirect("/lessons");
 
   return (
     <div className="bg-primary h-screen flex flex-col items-center justify-center">
       <h1 className="bg-black text-primary  flex items-center justify-center text-xl font-bold p-10">
-        This is a Home Component
+        redirecting...
       </h1>
     </div>
   );

@@ -8,6 +8,14 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    animation: {
+      border: "border 4s linear infinite",
+    },
+    keyframes: {
+      border: {
+        to: { "--border-angle": "360deg" },
+      },
+    },
     container: {
       center: true,
       padding: "2rem",
