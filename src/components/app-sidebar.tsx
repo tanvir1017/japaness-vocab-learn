@@ -61,9 +61,8 @@ export const navigationData = {
           title: "Add Vocabularies",
           url: "/dashboard/add-vocabularies",
         },
-
         {
-          title: "Vocabulary Management",
+          title: "View All Vocabularies",
           url: "/dashboard/vocabulary-management",
         },
       ],

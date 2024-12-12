@@ -2,6 +2,7 @@
 import { APIeEndPoints, axiosAPI } from "@/api/axios";
 import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 import ServerSubmitButton from "../styled-components/server-submit-button";
@@ -26,23 +27,24 @@ async function updateLesson(
 }
 
 export default function EditLessonForm({ lesson }: { lesson: TLessonList }) {
-  const { trigger, isMutating } = useSWRMutation(
-    "/api/v1/lesson",
-    updateLesson
-  );
+  const { trigger, isMutating } = useSWRMutation("/lesson", updateLesson);
 
+  // ** destructing the react-hook-method
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TInputs>();
+
   console.log(errors);
+
+  // ** Getting the form sumption
   const onSubmit: SubmitHandler<TInputs> = async (data) => {
     try {
       await trigger({ lessonId: lesson._id, data });
       mutate(APIeEndPoints.lesson); // Revalidate the lesson list
     } catch (error) {
-      console.error("Error updating lesson:", error);
+      toast(`Error updating lesson: ${JSON.stringify(error)}`);
     }
   };
 
