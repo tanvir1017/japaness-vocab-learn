@@ -1,6 +1,8 @@
 "use client";
 import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
+import { AlertModal } from "@/components/modal-toast/alert-modal";
+import { LessonEditDialog } from "@/components/modal-toast/lesson-edit-modal";
 import {
   Table,
   TableBody,
@@ -24,7 +26,7 @@ export function ViewAllLessonTable() {
     data: lessonList,
     error,
     isLoading,
-  } = useSWR(APIeEndPoints.lesson, fetcher);
+  } = useSWR(`${APIeEndPoints.base_url}${APIeEndPoints.lesson}`, fetcher);
 
   if (error) return "An error has occurred.";
   if (isLoading) return "Loading...";
@@ -39,7 +41,7 @@ export function ViewAllLessonTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {/* {lessonList?.data &&
+        {lessonList?.data &&
           lessonList?.data.data.map((lesson: TLessonList) => (
             <TableRow key={lesson._id}>
               <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
@@ -52,7 +54,7 @@ export function ViewAllLessonTable() {
                 </div>
               </TableCell>
             </TableRow>
-          ))} */}
+          ))}
       </TableBody>
       <TableFooter>
         <TableRow>

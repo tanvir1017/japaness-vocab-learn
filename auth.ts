@@ -115,6 +115,28 @@ export const authConfig = {
 
       return await refreshAccessToken(token);
     },
+    authorized({ auth, request: { nextUrl } }: any) {
+      const isLoggedIn = !!auth?.user;
+      const currentPath = nextUrl.pathname;
+
+      // handling rolled  based access or authentication
+      if (!isLoggedIn) {
+        if (!currentPath.startsWith("/authwall")) {
+          return Response.redirect(new URL(`/authwall/signin`, nextUrl));
+        }
+      } else if (isLoggedIn && auth?.user?.role === "admin") {
+        if (!currentPath.startsWith("/dashboard")) {
+          return Response.redirect(new URL(`/dashboard`, nextUrl));
+        }
+      } else if (isLoggedIn && auth?.user?.role === "lerner") {
+        const lernerAllowedPaths = ["/tutorials", "/lessons"];
+        if (!lernerAllowedPaths.some((path) => currentPath.startsWith(path))) {
+          return Response.redirect(new URL(currentPath, nextUrl));
+        }
+      }
+
+      return true;
+    },
     async session({ session, token }: any) {
       session.user.email = token.email;
       session.user.role = token.role;

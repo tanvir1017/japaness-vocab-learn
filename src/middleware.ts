@@ -1,4 +1,3 @@
-const privateRoutes = ["/dashboard"];
 import { authConfig } from "auth";
 import NextAuth from "next-auth";
 

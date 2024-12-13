@@ -23,6 +23,7 @@ async function TutorialPage() {
   const result = (await res.json()) as TTurialAPiResponse;
   const data = result.data;
   return <TutorialCard tutorial={data} />;
+  console.log("🚀 ~ TutorialPage ~ data:", data);
 }
 
 export default TutorialPage;
