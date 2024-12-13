@@ -2,6 +2,8 @@ import DashboardHeader from "@/components/dashboard-header";
 import AddLesson, { UserSession } from "@/pages/dashboard/lesson/add-lessons";
 import { auth } from "auth";
 
+// bun .lo
+
 const AddLessonPage = async () => {
   const session = await auth();
   if (!session?.user) return null;
