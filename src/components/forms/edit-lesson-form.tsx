@@ -1,6 +1,6 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
 import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";

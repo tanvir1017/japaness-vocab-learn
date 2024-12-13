@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints } from "@/api/axios";
+import { APIeEndPoints } from "@/components/api/axios";
 import { VideoHoverAbleCard } from "@/components/styled-components/video-card-hoverable";
 import { fetcher } from "@/lib/fetcher";
 import { getNestedData } from "@/lib/getNestedData";

@@ -26,13 +26,13 @@ const Navbar = () => {
     return null;
   }
   return (
-    <header className={cn("bg-primary sticky top-0 w-full")}>
-      <nav className="container flex items-center justify-between  py-1">
+    <header className={cn(" sticky top-0 z-20")}>
+      <nav className="container bg-[#1d273a] flex items-center justify-between py-1.5">
         <ul className="">
           <li>
             <Link
               href={"/"}
-              className=" block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"
+              className=" block w-full h-full py-2 px-6 rounded-md "
             >
               <LayoutDashboard />
             </Link>
@@ -42,14 +42,14 @@ const Navbar = () => {
           <li className="">
             <Link
               href={"/lessons"}
-              className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"
+              className="hover:tracking-wider duration-200 transition-all block w-full h-full py-2 px-6 rounded-md"
             >
               Lessons
             </Link>
           </li>
           <li>
             <Link
-              className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"
+              className="hover:tracking-wider duration-200 transition-all block w-full h-full py-2 px-6 rounded-md"
               href={"/tutorials"}
             >
               Tutorials
@@ -57,7 +57,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"
+              className="hover:tracking-wider duration-200 transition-all block w-full h-full py-2 px-6 rounded-md"
               href={"/authwall/signin"}
             >
               Sign in
@@ -66,7 +66,7 @@ const Navbar = () => {
           <button onClick={() => signOut()}>Sign Out</button>
           <li>
             <Link
-              className="bg-white block w-full h-full py-2 px-6 rounded-md hover:bg-black hover:text-primary"
+              className="hover:tracking-wider duration-200 transition-all block w-full h-full py-2 px-6 rounded-md"
               href={"/dashboard"}
             >
               Dashboard

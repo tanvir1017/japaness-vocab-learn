@@ -1,6 +1,6 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
 import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { AlertModal } from "@/components/modal-toast/alert-modal";
 import { VocabEditDialog } from "@/components/modal-toast/vocab-edit-modal";
 import {

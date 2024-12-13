@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { getNestedData } from "@/lib/getNestedData";
 import { TVocabularyFormInputs } from "@/pages/dashboard/lesson/add-vocabularies";
 import { TVocabulary } from "@/pages/dashboard/lesson/vocabulary-management-table";

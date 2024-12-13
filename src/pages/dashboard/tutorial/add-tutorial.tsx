@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import ServerSubmitButton from "@/components/styled-components/server-submit-button";
 import {
   Card,

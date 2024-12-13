@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { AlertModal } from "@/components/modal-toast/alert-modal";
 import { PromoteRole } from "@/components/modal-toast/promote-role";
 import {

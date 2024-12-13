@@ -106,7 +106,7 @@ export const authConfig = {
         token.role = user.role;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
-        token.accessTokenExpires = Date.now() + 60 * 60 * 1000; // Example: 1 hour expiration
+        token.accessTokenExpires = Date.now() + 24 * 60 * 60 * 1000; //1 day expiration
       }
 
       if (Date.now() < token.accessTokenExpires) {

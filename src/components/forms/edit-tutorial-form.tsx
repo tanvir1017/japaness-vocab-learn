@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";

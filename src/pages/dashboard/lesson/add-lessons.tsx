@@ -1,5 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/api/axios";
+import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import ErrorMessageComp from "@/components/styled-components/error-message-comp";
 import ServerSubmitButton from "@/components/styled-components/server-submit-button";
 import {
