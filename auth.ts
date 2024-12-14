@@ -100,7 +100,6 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }: any) {
-      console.log("🚀 ~ jwt ~ user:", user);
       if (user) {
         token.email = user.email;
         token.role = user.role;

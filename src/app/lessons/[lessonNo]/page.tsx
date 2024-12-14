@@ -1,6 +1,6 @@
 import { APIeEndPoints } from "@/components/api/axios";
 import VocabularyLearn from "@/pages/lessons/vocabulary-learn";
-import { TMetaApiResponse } from "./sf";
+import { TMetaApiResponse } from "@/types/global";
 
 type Params = Promise<{ lessonNo: string }>;
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
@@ -8,9 +8,6 @@ export default async function LanguageCard(props: {
   params: Params;
   searchParams: SearchParams;
 }) {
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const totalPages = 7;
-
   const lessonNo = (await props.params).lessonNo;
   const searchParams = await props.searchParams;
 

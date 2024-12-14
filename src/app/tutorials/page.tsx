@@ -34,7 +34,12 @@ async function TutorialPage() {
           your Japanese skills.
         </p>
       </div>
-      <TutorialCard tutorial={data} />
+      {data.length && <TutorialCard tutorial={data} />}
+      {!data.length && (
+        <div className="min-h-screen flex flex-col items-center justify-center">
+          <h2 className="text-2xl">No Tutorial found</h2>
+        </div>
+      )}
     </GradientBg>
   );
 }

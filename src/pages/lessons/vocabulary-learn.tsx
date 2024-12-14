@@ -33,7 +33,7 @@ const VocabularyLearn = ({
     }
     return () => (timeoutId ? clearTimeout(timeoutId) : undefined);
   }, [showConfetti, router]);
-  const totalPages = result.data.meta.totalPage;
+  // const totalPages = result.data.meta.totalPage;
   if (!result?.data?.result.length) {
     return <ErrorPage />;
   }
