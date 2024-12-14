@@ -1,20 +1,31 @@
 "use client";
-import { TLesson } from "@/app/(users)/lessons/page";
+
 import { APIeEndPoints } from "@/components/api/axios";
 import { fetcher } from "@/lib/fetcher";
 import { getNestedData } from "@/lib/getNestedData";
+import { TLesson } from "@/types/global";
 import { AxiosResponse } from "axios";
 import { Book } from "lucide-react";
 import Image from "next/image";
 import useSWR from "swr";
+import mash from "../../assets/images/mash.png";
 import { Button } from "../ui/button";
 
-function HoverCard({ lesson }: { lesson: TLesson }) {
+export const getVocabCount = (lessonId: string) => {
   const { data, isLoading, error } = useSWR(
-    `${APIeEndPoints.vocabulary}/${lesson._id}/vocab-list`,
+    `${APIeEndPoints.vocabulary}/${lessonId}/vocab-list`,
     fetcher
   );
 
+  return {
+    data,
+    isLoading,
+    error,
+  };
+};
+
+function HoverCard({ lesson }: { lesson: TLesson }) {
+  const { data, isLoading, error } = getVocabCount(lesson._id);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Failed to load data</div>;
 
@@ -26,22 +37,22 @@ function HoverCard({ lesson }: { lesson: TLesson }) {
         <div className="relative text-center z-10 px-0 pt-12 rounded-2xl  w-fit  h-full mx-auto">
           <>
             <Image
-              src={"/images/video-thumbnail.jpg"}
-              alt="grid"
+              src={mash}
+              alt="A mash gradient thumbnail"
               width={600}
               className="mx-auto w-[85%] rounded-xl"
               height={600}
             />
             <div className="my-6 text-left px-6">
               <h1 className="text-xl font-semibold tracking-tight text-white mb-2">
-                Title: {lesson.title}
+                {lesson.title}
               </h1>
               <div className="text-white">
                 Total Vocabulary: {vocabList.data}
               </div>
 
               <div className="mt-4">
-                <Button className="" variant="secondary">
+                <Button className="rounded-full" variant="secondary">
                   <Book className="size-4" />
                   Take Lesson
                 </Button>

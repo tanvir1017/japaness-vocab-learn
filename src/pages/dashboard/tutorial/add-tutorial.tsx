@@ -78,7 +78,12 @@ const AddTutorialComponent = () => {
                 />
               </div>
 
-              <ServerSubmitButton type="submit" aria-disabled={isMutating}>
+              <ServerSubmitButton
+                type="submit"
+                disabled={isMutating}
+                aria-disabled={isMutating}
+                className="text-white"
+              >
                 {isMutating ? (
                   <span>
                     <Loader className="animate transition-all" /> processing...

@@ -1,4 +1,4 @@
-import { SigninForm } from "@/pages/auth-pages/signin/signin-form";
+import SigninForm from "@/pages/auth-pages/signin/signin-form";
 import { auth } from "auth";
 import { redirect } from "next/navigation";
 

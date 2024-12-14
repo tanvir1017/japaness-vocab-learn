@@ -1,6 +1,6 @@
 "use client";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
-import { Button } from "@/components/ui/button";
+import ServerSubmitButton from "@/components/styled-components/server-submit-button";
 import {
   Card,
   CardContent,
@@ -11,29 +11,59 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { cn } from "@/lib/utils";
+import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 type TInputs = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 };
-export function SignupForm() {
+
+type TUserArguments = {
+  name: { firstName: string; lastName: string };
+  email: string;
+  password: string;
+  gender: string;
+};
+
+async function addUser(url: string, { arg }: { arg: TUserArguments }) {
+  try {
+    const response = await axiosAPI.post(
+      `${APIeEndPoints.users}/create-user`,
+      arg // Data sent to the backend
+    );
+    return response.data; // Return data for further processing if needed
+  } catch (error) {
+    console.error("Error posting data to backend:", error);
+    throw error; // Rethrow error for error handling
+  }
+}
+
+export default function SignupForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TInputs>();
 
+  const router = useRouter();
+
   const [gender, setGender] = useState("male");
+  const { trigger, isMutating } = useSWRMutation("/users", addUser);
 
   const onSubmit: SubmitHandler<TInputs> = async (data) => {
     console.log(errors);
-    const bodyData = {
-      lerner: {
+
+    try {
+      // Send data to backend
+      const result = await trigger({
         name: {
           firstName: data.firstName,
           lastName: data.lastName,
@@ -41,30 +71,17 @@ export function SignupForm() {
         password: data.password,
         email: data.email,
         gender,
-      },
-    };
+      });
 
-    try {
-      const response = await axiosAPI.post(
-        APIeEndPoints.signUpUrl,
-        JSON.stringify(bodyData),
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      const { success, message } = response.data;
-      if (success) {
-        toast(message);
+      if (!result.success) {
+        toast("Failed to create user!");
       } else {
-        toast("something went wrong!!");
+        toast(result.message);
+        router.push("/authwall/signin");
       }
-
-      // Redirect to the home page after successful signup
-      // window.location.href = "/";
     } catch (error) {
-      console.log(error);
-      toast(`Failed to create user: ${error}`);
+      console.error("Error adding vocabulary:", error);
+      toast("Error adding vocabulary.");
     }
   };
 
@@ -114,11 +131,12 @@ export function SignupForm() {
               <Input
                 id="password"
                 {...register("password")}
+                placeholder="***"
                 type="password"
                 required
               />
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-2 py-1">
               <RadioGroup
                 defaultValue="male"
                 onValueChange={(value) => setGender(value)}
@@ -137,9 +155,24 @@ export function SignupForm() {
                 </div>
               </RadioGroup>
             </div>
-            <Button type="submit" className="w-full">
-              Sign up
-            </Button>
+            <ServerSubmitButton
+              className="text-white "
+              disabled={isMutating}
+              aria-disabled
+            >
+              {isMutating ? (
+                <span className="flex items-center space-x-3">
+                  <LoaderCircle
+                    className={cn("transition-all text-white mr-0", {
+                      ["animate-spin mr-2 transition-transform"]: isMutating,
+                    })}
+                  />
+                  processing...
+                </span>
+              ) : (
+                "Sign up"
+              )}
+            </ServerSubmitButton>
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}

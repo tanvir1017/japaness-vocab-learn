@@ -1,5 +1,6 @@
 "use client";
-import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
+
+import { TLessonList } from "@/app/dashboard/view-all-lessons/page";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -26,7 +27,13 @@ async function updateLesson(
   );
 }
 
-export default function EditLessonForm({ lesson }: { lesson: TLessonList }) {
+export default function EditLessonForm({
+  lesson,
+  setIsOpen,
+}: {
+  lesson: TLessonList;
+  setIsOpen: any;
+}) {
   const { trigger, isMutating } = useSWRMutation("/lesson", updateLesson);
 
   // ** destructing the react-hook-method
@@ -43,6 +50,7 @@ export default function EditLessonForm({ lesson }: { lesson: TLessonList }) {
     try {
       await trigger({ lessonId: lesson._id, data });
       mutate(APIeEndPoints.lesson); // Revalidate the lesson list
+      setIsOpen(false); // Close the modal after successful update
     } catch (error) {
       toast(`Error updating lesson: ${JSON.stringify(error)}`);
     }
@@ -76,7 +84,11 @@ export default function EditLessonForm({ lesson }: { lesson: TLessonList }) {
         </div>
       </div>
       <DialogFooter>
-        <ServerSubmitButton aria-disabled={isMutating}>
+        <ServerSubmitButton
+          className="text-white"
+          disabled={isMutating}
+          aria-disabled={isMutating}
+        >
           Save Changes
         </ServerSubmitButton>
       </DialogFooter>{" "}

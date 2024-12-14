@@ -1,4 +1,4 @@
-import { VocabularyManagementTable } from "./vocabulary-management-table";
+import VocabularyManagementTable from "./vocabulary-management-table";
 
 const VocabularyManagement = () => {
   return (

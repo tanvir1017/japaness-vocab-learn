@@ -1,5 +1,5 @@
-import { TTurialDataType } from "@/app/(users)/tutorials/page";
-import VideoComponent from "@/components/styled-components/video-component";
+import { TTurialDataType } from "@/app/tutorials/page";
+import YoutubeVideo from "@/components/video";
 import { Suspense } from "react";
 
 interface TutorialCardProps {
@@ -7,17 +7,25 @@ interface TutorialCardProps {
 }
 
 const TutorialCard = ({ tutorial }: TutorialCardProps) => {
-  console.log("🚀 ~ TutorialCard ~ tutorial:", tutorial);
   return (
-    <div className="container border w-full h-screen pt-10">
-      <div className="grid md:grid-cols-3 gap-3">
-        {tutorial?.map((t) => (
-          <div key={t._id} className="bg-purple-300 aspect-video">
-            <Suspense fallback={<p>Loading video...</p>}>
-              <VideoComponent src={t.url} title={t.title} />
-            </Suspense>
+    <div className="container w-full min-h-screen mt-20">
+      <div className="grid place-items-center gap-3">
+        {tutorial.length ? (
+          tutorial?.map((t) => (
+            <div
+              key={t._id}
+              className="mx-auto max-w-full border overflow-hidden"
+            >
+              <Suspense fallback={<p>Loading video...</p>}>
+                <YoutubeVideo url={t.url} />
+              </Suspense>
+            </div>
+          ))
+        ) : (
+          <div className="min-h-screen flex flex-col items-center justify-center">
+            <h2 className="text-2xl">No Tutorial found</h2>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

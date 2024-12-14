@@ -1,4 +1,4 @@
-import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
+import { TLessonList } from "@/app/dashboard/view-all-lessons/page";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,9 +10,17 @@ import {
 } from "@/components/ui/dialog";
 import EditLessonForm from "../forms/edit-lesson-form";
 
-export function LessonEditDialog({ lesson }: { lesson: TLessonList }) {
+export function LessonEditDialog({
+  lesson,
+  isOpen,
+  setIsOpen,
+}: {
+  lesson: TLessonList;
+  isOpen: boolean;
+  setIsOpen: any;
+}) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" className="border border-slate-200">
           Edit Lesson
@@ -26,7 +34,7 @@ export function LessonEditDialog({ lesson }: { lesson: TLessonList }) {
             Make changes to your lesson here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <EditLessonForm lesson={lesson} />
+        <EditLessonForm setIsOpen={setIsOpen} lesson={lesson} />
       </DialogContent>
     </Dialog>
   );

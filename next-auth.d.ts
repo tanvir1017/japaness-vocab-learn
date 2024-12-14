@@ -4,6 +4,10 @@ declare module "next-auth" {
   interface User {
     id: string;
     email: string;
+    name: {
+      firstName?: string;
+      lastName?: string;
+    };
     cognitoGroups: string[];
     accessToken: string;
     refreshToken: string;

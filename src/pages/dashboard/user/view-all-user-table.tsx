@@ -1,6 +1,5 @@
 "use client";
-import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
-import { AlertModal } from "@/components/modal-toast/alert-modal";
+import { APIeEndPoints } from "@/components/api/axios";
 import { PromoteRole } from "@/components/modal-toast/promote-role";
 import {
   Table,
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fetcher } from "@/lib/fetcher";
 import { getNestedData } from "@/lib/getNestedData";
 import { AxiosResponse } from "axios";
 import useSWR from "swr";
@@ -31,20 +31,7 @@ export type TUserResponse = {
   __v: number;
 };
 
-// async function updateLesson(
-//   url: string,
-//   { arg }: { arg: { id: string; data:  } }
-// ) {
-//   // Make the API call to update the lesson
-//   const res = await axiosAPI.patch(
-//     `${APIeEndPoints.vocabulary}/${arg.id}/update`,
-//     arg.data
-//   );
-//   return res;
-// }
-
-const fetcher = (url: string) => axiosAPI.get(url);
-export function ViewAllUserTable() {
+export default function ViewAllUserTable() {
   const {
     data: users,
     error,
@@ -59,8 +46,8 @@ export function ViewAllUserTable() {
     <Table className="border">
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">User Name</TableHead>
           <TableHead className="w-[200px]">User Email</TableHead>
+          <TableHead className="w-[200px]">User Name</TableHead>
           <TableHead>User Role</TableHead>
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
@@ -77,7 +64,6 @@ export function ViewAllUserTable() {
               <TableCell className="text-right">
                 <div className="space-x-2">
                   <PromoteRole user={user} />
-                  <AlertModal />
                 </div>
               </TableCell>
             </TableRow>
@@ -86,7 +72,7 @@ export function ViewAllUserTable() {
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">3</TableCell>
+          <TableCell className="text-right">{Users.length}</TableCell>
         </TableRow>
       </TableFooter>
     </Table>

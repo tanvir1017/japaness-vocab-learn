@@ -1,5 +1,6 @@
 "use client";
-import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
+
+import { TLessonList } from "@/app/dashboard/view-all-lessons/page";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { AlertModal } from "@/components/modal-toast/alert-modal";
 import { VocabEditDialog } from "@/components/modal-toast/vocab-edit-modal";
@@ -7,7 +8,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -29,7 +29,7 @@ export type TVocabulary = {
 };
 
 const fetcher = (url: string) => axiosAPI.get(url);
-export function VocabularyManagementTable() {
+export default function VocabularyManagementTable() {
   const {
     data: vocabularies,
     error,
@@ -62,18 +62,15 @@ export function VocabularyManagementTable() {
               <TableCell className="text-right">
                 <div className="space-x-2">
                   <VocabEditDialog vocab={vocab} />
-                  <AlertModal />
+                  <AlertModal
+                    mainPathWithItemId={`${APIeEndPoints.vocabulary}/${vocab._id}`}
+                    revalidationPath={APIeEndPoints.vocabulary}
+                  />
                 </div>
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">3</TableCell>
-        </TableRow>
-      </TableFooter>
     </Table>
   );
 }

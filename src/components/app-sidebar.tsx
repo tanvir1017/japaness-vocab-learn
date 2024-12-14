@@ -17,6 +17,7 @@ import {
   SidebarContent,
   SidebarHeader,
 } from "@/components/ui/sidebar";
+import { SessionProvider } from "next-auth/react";
 import { TeamSwitcher } from "./team-switcher";
 
 // This is sample data.
@@ -100,13 +101,15 @@ export const navigationData = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={navigationData.navMain} />
-      </SidebarContent>
-    </Sidebar>
+    <SessionProvider>
+      <Sidebar collapsible="icon" {...props}>
+        <SidebarHeader>
+          <TeamSwitcher />
+        </SidebarHeader>
+        <SidebarContent>
+          <NavMain items={navigationData.navMain} />
+        </SidebarContent>
+      </Sidebar>
+    </SessionProvider>
   );
 }

@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { isJapanese } from "@/lib/isJapanese";
+import { Loader } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -84,7 +85,9 @@ export default function AddVocabularies({ user }: { user: UserSession }) {
           <CardTitle className="text-2xl">
             Create Vocabulary For Specific Lesson
           </CardTitle>
-          <CardDescription>Vocabularies</CardDescription>
+          <CardDescription>
+            New vocabulary will be created by fill up the following information.{" "}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -138,8 +141,18 @@ export default function AddVocabularies({ user }: { user: UserSession }) {
               </div>
             </div>
 
-            <ServerSubmitButton aria-disabled={isMutating} className="w-full">
-              Add Vocabulary
+            <ServerSubmitButton
+              type="submit"
+              className="text-white  w-full"
+              aria-disabled={isMutating}
+            >
+              {isMutating ? (
+                <>
+                  <Loader className="animate transition-all" /> processing...
+                </>
+              ) : (
+                "Add Vocabulary"
+              )}
             </ServerSubmitButton>
           </form>
         </CardContent>

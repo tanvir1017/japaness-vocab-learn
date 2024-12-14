@@ -21,9 +21,9 @@ export function VocabEditDialog({ vocab }: { vocab: TVocabulary }) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogTitle> </DialogTitle>
         <DialogHeader>
-          <DialogTitle>Edit the lesson from here</DialogTitle>
+          <DialogTitle>Edit the vicarly from here</DialogTitle>
           <DialogDescription>
-            Make changes to your lesson here. Click save when youre done.
+            Make changes to your lesson here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
         <EditVocabForm vocab={vocab} />

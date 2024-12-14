@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/context/AuthProvider.tsx",
-    "src/hooks/useAuth.tsx"
+    "src/hooks/useAuth.tsx",
+    "next.config.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -2,8 +2,6 @@ import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
 
-const privateRoutes = ["/dashboard"];
-
 interface MyUser extends User {
   email: string;
   role: string;
@@ -88,6 +86,7 @@ export const authConfig = {
         return {
           email: decodedIdToken.userEmail,
           role: decodedIdToken.role,
+          name: decodedIdToken.name,
           accessToken: user.data.accessToken,
           refreshToken: user.data.refreshToken,
         } as MyUser;
@@ -101,9 +100,11 @@ export const authConfig = {
   },
   callbacks: {
     async jwt({ token, user }: any) {
+      console.log("🚀 ~ jwt ~ user:", user);
       if (user) {
         token.email = user.email;
         token.role = user.role;
+        token.name = user.name;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.accessTokenExpires = Date.now() + 24 * 60 * 60 * 1000; //1 day expiration
@@ -119,7 +120,7 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       const currentPath = nextUrl.pathname;
 
-      // handling rolled  based access or authentication
+      // handling role  based access or authentication
       if (!isLoggedIn) {
         if (!currentPath.startsWith("/authwall")) {
           return Response.redirect(new URL(`/authwall/signin`, nextUrl));
@@ -130,8 +131,9 @@ export const authConfig = {
         }
       } else if (isLoggedIn && auth?.user?.role === "lerner") {
         const lernerAllowedPaths = ["/tutorials", "/lessons"];
+
         if (!lernerAllowedPaths.some((path) => currentPath.startsWith(path))) {
-          return Response.redirect(new URL(currentPath, nextUrl));
+          return Response.redirect(new URL("/lessons", nextUrl));
         }
       }
 
@@ -140,6 +142,7 @@ export const authConfig = {
     async session({ session, token }: any) {
       session.user.email = token.email;
       session.user.role = token.role;
+      session.user.name = token.name;
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
       return session;

@@ -1,9 +1,11 @@
 "use client";
 import { TutorialApiResponse } from "@/pages/dashboard/tutorial/view-all-tutorials";
 import Image from "next/image";
+import natureImageJapan from "../../assets/images/nature.jpeg";
+import { APIeEndPoints } from "../api/axios";
+import { AlertModal } from "../modal-toast/alert-modal";
 import { PlayVideoModal } from "../modal-toast/play-video-modal";
 import { TutorialEditModal } from "../modal-toast/tutorial-edit-modal";
-import { Button } from "../ui/button";
 
 export function VideoHoverAbleCard({
   tutorial,
@@ -12,7 +14,7 @@ export function VideoHoverAbleCard({
 }) {
   return (
     <>
-      <div className="w-[90%]] h-[480px] group mx-auto dark:bg-[#252525] p-2 bg-white dark:border-0 border overflow-hidden rounded-md dark:text-white text-black ">
+      <div className="w-[90%] h-[480px] group mx-auto dark:bg-[#252525] p-2 bg-white dark:border-0 border overflow-hidden rounded-md dark:text-white text-black ">
         <figure className="w-full h-80 group-hover:h-72 transition-all duration-300 dark:bg-[#0a121a] bg-[#f0f5fa] p-2 rounded-md relative overflow-hidden">
           <div
             style={{
@@ -22,7 +24,7 @@ export function VideoHoverAbleCard({
             className="absolute top-0 left-0 w-full h-full  group-hover:opacity-100 opacity-0  transition-all duration-300"
           ></div>
           <Image
-            src={"/images/video-thumbnail.jpg"}
+            src={natureImageJapan}
             alt="an anime boy reading or learning japanese"
             width={600}
             height={600}
@@ -32,13 +34,14 @@ export function VideoHoverAbleCard({
         <article className="  p-4 space-y-2">
           <PlayVideoModal url={tutorial.url} />
           <h1 className="text-xl font-semibold capitalize">{tutorial.title}</h1>
-          <p className="text-base leading-[120%]">
-            Form a legal entity, issue stock, and start accepting payments.
-          </p>
+
           <div className=" text-base dark:text-white text-blue-600 font-normal group-hover:opacity-100 opacity-0 translate-y-2 group-hover:translate-y-0 pt-2 flex gap-1  transition-all duration-300  ">
             <div className="flex items-center gap-2">
               <TutorialEditModal tutorial={tutorial} />
-              <Button variant={"destructive"}>Delete</Button>
+              <AlertModal
+                mainPathWithItemId={`${APIeEndPoints.tutorial}/${tutorial._id}`}
+                revalidationPath={APIeEndPoints.tutorial}
+              />
             </div>
           </div>
         </article>

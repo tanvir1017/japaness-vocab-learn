@@ -15,10 +15,19 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { signOut } from "next-auth/react";
+import { User } from "next-auth";
+import { signOut, UpdateSession, useSession } from "next-auth/react";
+
+type TClientSession = {
+  update: UpdateSession;
+  data: User;
+  status: "unauthenticated" | "loading";
+};
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
+
+  const session = useSession();
 
   return (
     <SidebarMenu>
@@ -33,8 +42,17 @@ export function TeamSwitcher() {
                 <GalleryVerticalEnd className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">User Info</span>
-                <span className="truncate text-xs">user email</span>
+                <span className="truncate font-semibold uppercase">
+                  {session.status === "loading"
+                    ? "Loading..."
+                    : // @ts-ignore
+                      session?.data?.user?.name?.firstName}
+                </span>
+                <span className="truncate text-xs">
+                  {session.status === "loading"
+                    ? "Loading..."
+                    : session.data?.user.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>

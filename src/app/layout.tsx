@@ -1,7 +1,7 @@
-import Navbar from "@/components/shared/navbar";
-
 import Footer from "@/components/shared/footer";
+import NavigationCenter from "@/components/shared/navbar/nav-bar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { auth } from "auth";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
@@ -22,6 +22,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const isLoggedIn = session?.user;
   return (
     <html lang="en">
       <body className={`${space_Grotesk.className} antialiased`}>
@@ -31,8 +33,8 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main>{children}</main>
+          <NavigationCenter isLoggedIn={isLoggedIn} />
+          <main className="-mt-20">{children}</main>
           <Footer />
           <Toaster />
         </ThemeProvider>

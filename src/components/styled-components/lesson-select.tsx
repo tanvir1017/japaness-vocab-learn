@@ -23,7 +23,7 @@ export function LessonSelect({
   currentLesson?: string;
 }) {
   const { data, error, isLoading } = useSWR(
-    APIeEndPoints.lesson + "/list",
+    `${APIeEndPoints.lesson}/list`,
     fetcher
   );
   const lessonList = getNestedData(data as AxiosResponse);

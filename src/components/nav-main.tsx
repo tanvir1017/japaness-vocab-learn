@@ -37,6 +37,7 @@ export function NavMain({ items }: { items: PropsItem[] }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Dashboard Management</SidebarGroupLabel>
+
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible

@@ -47,6 +47,7 @@ export default function AddLesson({ user }: { user: UserSession }) {
 
     try {
       // write a axios post to backend
+      setIsPending(true);
       const response = await axiosAPI.post(
         `${APIeEndPoints.lesson}/create-lesson`,
         JSON.stringify({ title, lessonNo, user: user.data._id }),
@@ -58,10 +59,15 @@ export default function AddLesson({ user }: { user: UserSession }) {
       );
       if (response.data.success) {
         toast(response.data.message);
+        setIsPending(false);
       } else {
+        setIsPending(false);
+        setErrorMessage("something went wrong!");
         toast("something went wrong!");
       }
     } catch (error: unknown) {
+      setIsPending(false);
+      setErrorMessage(JSON.stringify((error as Error)?.message as string));
       toast(JSON.stringify((error as Error)?.message as string));
     }
   };
@@ -99,7 +105,11 @@ export default function AddLesson({ user }: { user: UserSession }) {
                 />
               </div>
 
-              <ServerSubmitButton type="submit" aria-disabled={isPending}>
+              <ServerSubmitButton
+                type="submit"
+                className="text-white"
+                aria-disabled={isPending}
+              >
                 {isPending ? (
                   <span>
                     <Loader className="animate transition-all" />

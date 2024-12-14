@@ -3,6 +3,7 @@ import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
 import { getNestedData } from "@/lib/getNestedData";
 import { TVocabularyFormInputs } from "@/pages/dashboard/lesson/add-vocabularies";
 import { TVocabulary } from "@/pages/dashboard/lesson/vocabulary-management-table";
+import { Loader } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -130,8 +131,18 @@ export default function VocabEditForm({ vocab }: { vocab: TVocabulary }) {
         </div>
       </div>
       <DialogFooter>
-        <ServerSubmitButton aria-disabled={isMutating}>
-          Save Changes
+        <ServerSubmitButton
+          type="submit"
+          className="text-white "
+          aria-disabled={isMutating}
+        >
+          {isMutating ? (
+            <>
+              <Loader className="animate transition-all" /> processing...
+            </>
+          ) : (
+            "Save changes"
+          )}
         </ServerSubmitButton>
       </DialogFooter>{" "}
     </form>

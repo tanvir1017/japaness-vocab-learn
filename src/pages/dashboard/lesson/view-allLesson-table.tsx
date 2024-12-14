@@ -1,17 +1,22 @@
 "use client";
-import { TLessonList } from "@/app/(admin)/dashboard/(lesson-management)/view-all-lessons/page";
-import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
+
+import { TLessonList } from "@/app/dashboard/view-all-lessons/page";
+import { APIeEndPoints } from "@/components/api/axios";
 import { AlertModal } from "@/components/modal-toast/alert-modal";
 import { LessonEditDialog } from "@/components/modal-toast/lesson-edit-modal";
+import { getVocabCount } from "@/components/styled-components/hover-card";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fetcher } from "@/lib/fetcher";
+import { getNestedData } from "@/lib/getNestedData";
+import { AxiosResponse } from "axios";
+import React from "react";
 import useSWR from "swr";
 
 type TResponseType = {
@@ -19,17 +24,17 @@ type TResponseType = {
   success: boolean;
   data: TLessonList[];
 };
-
-const fetcher = (url: string) => axiosAPI.get(url);
-export function ViewAllLessonTable() {
+export default function ViewAllLessonTable() {
+  const [open, setOpen] = React.useState(false);
   const {
     data: lessonList,
     error,
     isLoading,
-  } = useSWR(`${APIeEndPoints.base_url}${APIeEndPoints.lesson}`, fetcher);
+  } = useSWR(`${APIeEndPoints.lesson}`, fetcher);
 
   if (error) return "An error has occurred.";
   if (isLoading) return "Loading...";
+
   return (
     <Table className="border">
       <TableHeader>
@@ -46,22 +51,34 @@ export function ViewAllLessonTable() {
             <TableRow key={lesson._id}>
               <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
               <TableCell className="">{lesson.title}</TableCell>
-              <TableCell>3</TableCell>
+              <VocabularyTotal id={lesson._id} />
               <TableCell className="text-right">
                 <div className="space-x-2">
-                  <LessonEditDialog lesson={lesson} />
-                  <AlertModal />
+                  <LessonEditDialog
+                    isOpen={open}
+                    setIsOpen={setOpen}
+                    lesson={lesson}
+                  />
+                  <AlertModal
+                    mainPathWithItemId={`${APIeEndPoints.lesson}/${lesson._id}`}
+                    revalidationPath={APIeEndPoints.lesson}
+                  />
                 </div>
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">3</TableCell>
-        </TableRow>
-      </TableFooter>
     </Table>
   );
+}
+
+export function VocabularyTotal({ id }: { id: string }) {
+  const { data, isLoading, error } = getVocabCount(id);
+
+  if (isLoading) return <TableCell>Loading...</TableCell>;
+
+  if (error) return <TableCell>Failed to load data</TableCell>;
+
+  const vocabList = getNestedData(data as AxiosResponse);
+  return <TableCell>{vocabList.data || 0}</TableCell>;
 }

@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { Github, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AnimatedText from "../styled-components/cursor-follow";
 
 function Footer() {
   const pathName = usePathname();
@@ -11,53 +10,83 @@ function Footer() {
     return null;
   }
   return (
-    <footer
-      className="footer-bg relative border 2xl:h-[550px] h-fit lg:pb-20 w-[95%] mx-auto mb-8 rounded-lg overflow-hidden radial-gradient-bg
-                   [--gradient-center:#f3f4f6] [--gradient-edge:#f3f4f6]
-                   dark:[--gradient-center:#02081765] dark:[--gradient-edge:#020817]"
-    >
-      <div className="gap-10 sm:flex justify-between p-5 2xl:py-10 py-5 dark:bg-[#4c61ff]   bg-blue-500 rounded-sm rounded-b-none text-white">
-        <div className="w-fit flex-col  flex  justify-center">
-          <div className="2xl:w-24 2xl:h-24 w-20 h-20 ml-3 bg-white  rounded-sm before:absolute relative before:w-full before:h-full before:bg-white/50  before:rounded-md before:-top-3 before:-left-3"></div>
-          <article className="py-2  2xl:w-80 w-64  space-y-1">
-            <h1 className="newFont text-3xl font-bold">Learn Japanese</h1>
-            <p className="text-sm  leading-[120%] ">
-              Learn Japanese effectively by mastering essential vocabulary. Our
-              platform helps you build a strong foundation in the Japanese
-              language through carefully curated word lists, making learning fun
-              and engaging. Start your journey to fluency today!
+    <footer className="bg-gradient-to-t from-black to-[#020817]  text-gray-300">
+      <div className="container mx-auto px-4 py-8 lg:py-12">
+        <div className="flex flex-col items-center justify-between space-y-8 lg:flex-row lg:space-y-0">
+          <div className="flex flex-col items-center lg:items-start space-y-4 lg:w-1/3">
+            <h2 className="text-2xl font-bold text-gray-100">
+              Connect With Us
+            </h2>
+            <p className="text-center lg:text-left text-gray-400">
+              Join our community and stay updated with the latest news and
+              offers.
             </p>
-          </article>
-        </div>
-
-        <div className="sm:block flex sm:mt-0 mt-4  gap-2 sm:w-auto w-full sm:space-y-2 relative z-[1]">
-          <ul>
-            <Link href={"/lessons"}>
-              <li className="text-2xl mb-2 hover:underline transition-all duration-300 flex  items-center">
-                Home
-                <ArrowRight className="ml-2" />
-              </li>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 lg:w-1/3">
+            <Link
+              href="https://twitter.com/tanvi1017"
+              className="group"
+              target="_blank"
+              aria-label="X (Twitter)"
+            >
+              <div className="bg-blue-600 p-3 rounded-full transition-all duration-200 group-hover:scale-110 group-hover:bg-blue-500 group-hover:shadow-lg group-hover:shadow-blue-500/50">
+                <Twitter className="h-6 w-6 text-white" />
+              </div>
             </Link>
-            <Link href={"/tutorials"}>
-              <li className="text-2xl mb-2 hover:underline transition-all duration-300 flex items-center">
-                Tutorials
-                <ArrowRight className="ml-2" />
-              </li>
+            <Link
+              href="https://www.linkedin.com/in/tanvir1017/"
+              className="group"
+              target="_blank"
+              aria-label="LinkedIn"
+            >
+              <div className="bg-blue-800 p-3 rounded-full transition-all duration-200 group-hover:scale-110 group-hover:bg-blue-700 group-hover:shadow-lg group-hover:shadow-blue-700/50">
+                <Linkedin className="h-6 w-6 text-white" />
+              </div>
             </Link>
-            <li className="text-2xl mb-2 hover:underline transition-all duration-300 flex items-center">
-              Dashboard
-              <ArrowRight className="ml-2" />
-            </li>
-          </ul>
+            <Link
+              href="https://github.com/tanvir1017?tab=repositories"
+              className="group"
+              target="_blank"
+              aria-label="GitHub"
+            >
+              <div className="bg-gray-700 p-3 rounded-full transition-all duration-200 group-hover:scale-110 group-hover:bg-gray-600 group-hover:shadow-lg group-hover:shadow-gray-600/50">
+                <Github className="h-6 w-6 text-white" />
+              </div>
+            </Link>
+          </div>
+          <div className="lg:w-1/3 text-center lg:text-right">
+            <p className="text-sm text-gray-400">
+              &copy; {new Date().getFullYear()} Design & Developed By{" "}
+              <Link
+                target="_blank"
+                href="https://github.com/tanvir1017?tab=repositories"
+                className="underline"
+              >
+                Tanvir
+              </Link>
+            </p>
+            <p className="text-sm text-gray-400 mt-1">All rights reserved.</p>
+          </div>
         </div>
-      </div>
-      <div className="lg:flex hidden">
-        <AnimatedText
-          text="Learn Japanese"
-          className="2xl:text-[11rem] text-[12vw]"
-        />
       </div>
     </footer>
+  );
+}
+
+function WaveSeparator() {
+  return (
+    <div className="w-full overflow-hidden">
+      <svg
+        className="relative block w-full h-[60px] sm:h-[100px] lg:h-[120px]"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          className="fill-[#1c3478]"
+        ></path>
+      </svg>
+    </div>
   );
 }
 

@@ -16,10 +16,7 @@ export type TutorialApiResponse = {
 };
 
 const ViewAllTutorialsComponent = () => {
-  const { data, error, isLoading } = useSWR(
-    APIeEndPoints.base_url + APIeEndPoints.tutorial,
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(APIeEndPoints.tutorial, fetcher);
 
   const tutorials = getNestedData(data as AxiosResponse);
 
@@ -28,9 +25,13 @@ const ViewAllTutorialsComponent = () => {
   return (
     <div className="px-10">
       <div className="grid  grid-cols-1 md:grid-cols-3 ">
-        {tutorials.data.map((tutorial: TutorialApiResponse) => (
-          <VideoHoverAbleCard tutorial={tutorial} key={tutorial._id} />
-        ))}
+        {tutorials.data.length ? (
+          tutorials.data.map((tutorial: TutorialApiResponse) => (
+            <VideoHoverAbleCard tutorial={tutorial} key={tutorial._id} />
+          ))
+        ) : (
+          <p>No tutorial found</p>
+        )}
       </div>
     </div>
   );
