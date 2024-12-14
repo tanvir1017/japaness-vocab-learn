@@ -9,10 +9,15 @@ interface MyUser extends User {
   refreshToken: string;
 }
 
+const BASE_URL =
+  process.env.NODE_ENV !== "development"
+    ? process.env.NEXT_PUBLIC_API_BASE_URL
+    : process.env.NEXT_PUBLIC_API_BASE_URL_FOR_DEV;
+
 // ** Refresh token generation logic
 async function refreshAccessToken(token: any) {
   try {
-    const res = await fetch(`${process.env.API_BASE_URL}/auth/refresh-token`, {
+    const res = await fetch(`${BASE_URL}/auth/refresh-token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +63,7 @@ export const authConfig = {
           password,
         };
 
-        const res = await fetch(`${process.env.API_BASE_URL}/auth/signin`, {
+        const res = await fetch(`${BASE_URL}/auth/signin`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -93,7 +98,7 @@ export const authConfig = {
       },
     }),
   ],
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   pages: {
     signIn: "/authwall/signin",
     error: "/authwall/signin",
@@ -118,20 +123,22 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }: any) {
       const isLoggedIn = !!auth?.user;
       const currentPath = nextUrl.pathname;
-
+      const lernerAllowedPaths = ["/tutorials", "/lessons"];
       // handling role  based access or authentication
       if (!isLoggedIn) {
         if (!currentPath.startsWith("/authwall")) {
           return Response.redirect(new URL(`/authwall/signin`, nextUrl));
         }
-      } else if (isLoggedIn && auth?.user?.role === "admin") {
-        if (!currentPath.startsWith("/dashboard")) {
+      } else if (isLoggedIn) {
+        if (
+          auth?.user?.role === "admin" &&
+          !currentPath.startsWith("/dashboard")
+        ) {
           return Response.redirect(new URL(`/dashboard`, nextUrl));
-        }
-      } else if (isLoggedIn && auth?.user?.role === "lerner") {
-        const lernerAllowedPaths = ["/tutorials", "/lessons"];
-
-        if (!lernerAllowedPaths.some((path) => currentPath.startsWith(path))) {
+        } else if (
+          auth?.user?.role === "lerner" &&
+          !lernerAllowedPaths.some((path) => currentPath.startsWith(path))
+        ) {
           return Response.redirect(new URL("/lessons", nextUrl));
         }
       }

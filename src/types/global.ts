@@ -31,3 +31,18 @@ export type TMetaApiResponse = {
     result: TVocabulary[];
   };
 };
+
+export type TTutorialDataType = {
+  _id: string;
+  url: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type TTutorialAPiResponse = {
+  success: boolean;
+  message: string;
+  data: TTutorialDataType[];
+};

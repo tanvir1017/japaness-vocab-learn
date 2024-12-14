@@ -1,5 +1,7 @@
 "use client";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
+import { Loader } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -28,8 +30,10 @@ async function updateLesson(
 
 export default function EditTutorialForm({
   tutorial,
+  setIsOpen,
 }: {
   tutorial: TEditTutorial;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const { trigger, isMutating } = useSWRMutation("/lesson", updateLesson);
 
@@ -47,7 +51,10 @@ export default function EditTutorialForm({
     try {
       await trigger({ tutorialId: tutorial._id, data });
       mutate(APIeEndPoints.tutorial); // Revalidate the lesson list
+      setIsOpen((prev) => !prev);
+      toast("Tutorial updated successfully!");
     } catch (error) {
+      setIsOpen((prev) => !prev);
       toast(`Error updating lesson: ${JSON.stringify(error)}`);
     }
   };
@@ -80,8 +87,19 @@ export default function EditTutorialForm({
         </div>
       </div>
       <DialogFooter>
-        <ServerSubmitButton aria-disabled={isMutating}>
-          Save Changes
+        <ServerSubmitButton
+          type="submit"
+          disabled={isMutating}
+          aria-disabled={isMutating}
+          className="text-white transition-all duration-300"
+        >
+          {isMutating ? (
+            <span className="flex items-center transition-all">
+              <Loader className="animate transition-all" /> processing...
+            </span>
+          ) : (
+            "Save Changes"
+          )}
         </ServerSubmitButton>
       </DialogFooter>{" "}
     </form>

@@ -48,24 +48,26 @@ export default function SigninForm() {
     }).then((res: SignInResponse | undefined) => {
       if (!res) {
         toast("No response!");
-        setLoading(false);
+        setLoading((prev) => !prev);
         return;
       }
       if (!res.ok) {
         toast("Something went wrong!");
-        setLoading(false);
+        setLoading((prev) => !prev);
       } else if (res.error) {
         if (res.error == "CallbackRouteError") {
           toast("Could not login! Please check your credentials.");
-          setLoading(false);
+          setLoading((prev) => !prev);
         } else {
           toast(`Internal Server Error: ${res.error}`);
-          setLoading(false);
+          setLoading((prev) => !prev);
         }
       } else {
         if (callbackUrl) router.push(callbackUrl as any);
-        else router.push("/lessons");
-        setLoading(false);
+        else {
+          setLoading((prev) => !prev);
+          router.push("/lessons");
+        }
       }
     });
   }

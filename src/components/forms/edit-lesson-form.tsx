@@ -2,6 +2,7 @@
 
 import { TLessonList } from "@/app/dashboard/view-all-lessons/page";
 import { APIeEndPoints, axiosAPI } from "@/components/api/axios";
+import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -32,7 +33,7 @@ export default function EditLessonForm({
   setIsOpen,
 }: {
   lesson: TLessonList;
-  setIsOpen: any;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const { trigger, isMutating } = useSWRMutation("/lesson", updateLesson);
 
@@ -51,6 +52,7 @@ export default function EditLessonForm({
       await trigger({ lessonId: lesson._id, data });
       mutate(APIeEndPoints.lesson); // Revalidate the lesson list
       setIsOpen(false); // Close the modal after successful update
+      toast("Lesson updated successfully");
     } catch (error) {
       toast(`Error updating lesson: ${JSON.stringify(error)}`);
     }

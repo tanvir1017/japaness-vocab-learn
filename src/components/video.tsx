@@ -4,8 +4,6 @@ import YouTube from "react-youtube";
 
 const YoutubeVideo = ({ url }: { url: string }) => {
   const opts = {
-    height: "500",
-    width: "850",
     playerVars: {
       autoplay: 1,
     },
@@ -17,11 +15,7 @@ const YoutubeVideo = ({ url }: { url: string }) => {
 
   const videoId = getYouTubeVideoId(url as string);
 
-  return (
-    <div>
-      <YouTube videoId={videoId as string} opts={opts} onReady={onReady} />
-    </div>
-  );
+  return <YouTube videoId={videoId as string} opts={opts} onReady={onReady} />;
 };
 
 export default YoutubeVideo;

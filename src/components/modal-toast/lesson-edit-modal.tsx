@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Dispatch, SetStateAction } from "react";
 import EditLessonForm from "../forms/edit-lesson-form";
 
 export function LessonEditDialog({
@@ -17,7 +18,7 @@ export function LessonEditDialog({
 }: {
   lesson: TLessonList;
   isOpen: boolean;
-  setIsOpen: any;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

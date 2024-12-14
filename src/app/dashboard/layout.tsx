@@ -9,7 +9,7 @@ export default async function Dashboard({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-full mt-20">{children}</main>
+      <main className="w-full my-20">{children}</main>
     </SidebarProvider>
   );
 }

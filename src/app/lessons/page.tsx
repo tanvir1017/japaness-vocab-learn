@@ -23,7 +23,7 @@ async function LessonPage() {
   const result = (await res.json()) as LessonApiResponse;
 
   return (
-    <GradientBg>
+    <GradientBg className="p-4 md:p-8 min-h-screen">
       <div className="mb-20 text-center mt-20">
         <h2 className="text-4xl text-white font-bold">LEARN JAPANESE 🎌</h2>
         <p className="text-xl text-gray-300 mt-4">

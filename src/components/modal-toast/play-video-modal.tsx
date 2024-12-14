@@ -7,9 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AspectRatio } from "../ui/aspect-ratio";
+import VideoComponent from "../styled-components/video-component";
 
-export function PlayVideoModal({ url }: { url: string }) {
+export function PlayVideoModal({ url, title }: { url: string; title: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,16 +18,13 @@ export function PlayVideoModal({ url }: { url: string }) {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[600px] w-full ">
-        <DialogTitle> </DialogTitle>
+        <DialogTitle> {title}</DialogTitle>
         <DialogHeader>
           <DialogTitle className="hidden" aria-hidden={true}>
             Edit the tutorial from here
           </DialogTitle>
           <DialogDescription>
-            <div className="w-full">
-              <video src={url} autoPlay controls />
-              <AspectRatio ratio={12 / 5}></AspectRatio>
-            </div>
+            <VideoComponent title={title} src={url} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

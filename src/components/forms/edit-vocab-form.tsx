@@ -4,7 +4,7 @@ import { getNestedData } from "@/lib/getNestedData";
 import { TVocabularyFormInputs } from "@/pages/dashboard/lesson/add-vocabularies";
 import { TVocabulary } from "@/pages/dashboard/lesson/vocabulary-management-table";
 import { Loader } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -29,7 +29,13 @@ async function updateLesson(
   return res;
 }
 
-export default function VocabEditForm({ vocab }: { vocab: TVocabulary }) {
+export default function VocabEditForm({
+  vocab,
+  setIsOpen,
+}: {
+  vocab: TVocabulary;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const { trigger, isMutating } = useSWRMutation("/vocabulary", updateLesson);
 
   const {
@@ -57,16 +63,19 @@ export default function VocabEditForm({ vocab }: { vocab: TVocabulary }) {
         data: { ...data, lesson: selectLesson },
       });
       mutate(APIeEndPoints.vocabulary); // Revalidate the vocabulary endpoint
-
       const { message, success } = getNestedData(check);
       if (!success) {
+        setIsOpen((prev) => !prev);
         toast(`${message || "Something went wrong!!"}`);
       }
+      setIsOpen((prev) => !prev);
       toast(`${message || "Vocabulary updated successfully!!"}`);
     } catch (error) {
       if (error instanceof Error) {
+        setIsOpen((prev) => !prev);
         toast(error.message || "Something went wrong!!");
       } else {
+        setIsOpen((prev) => !prev);
         toast("An unknown error occurred");
       }
     }

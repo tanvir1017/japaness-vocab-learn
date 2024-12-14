@@ -9,7 +9,7 @@ interface ErrorPageProps {
 }
 
 export default function ErrorPage({
-  message = "No ovulary found",
+  message = "Something really bad happened! 💀",
 }: ErrorPageProps) {
   const router = useRouter();
 
