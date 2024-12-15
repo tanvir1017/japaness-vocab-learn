@@ -26,6 +26,7 @@ export const getVocabCount = (lessonId: string) => {
 
 function HoverCard({ lesson }: { lesson: TLesson }) {
   const { data, isLoading, error } = getVocabCount(lesson._id);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Failed to load data</div>;
 

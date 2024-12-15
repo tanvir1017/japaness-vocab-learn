@@ -16,7 +16,6 @@ import {
 import { fetcher } from "@/lib/fetcher";
 import { getNestedData } from "@/lib/getNestedData";
 import { AxiosResponse } from "axios";
-import React from "react";
 import useSWR from "swr";
 
 type TResponseType = {
@@ -25,7 +24,6 @@ type TResponseType = {
   data: TLessonList[];
 };
 export default function ViewAllLessonTable() {
-  const [open, setOpen] = React.useState(false);
   const {
     data: lessonList,
     error,
@@ -34,6 +32,8 @@ export default function ViewAllLessonTable() {
 
   if (error) return "An error has occurred.";
   if (isLoading) return "Loading...";
+
+  const getLesson = getNestedData(lessonList as AxiosResponse);
 
   return (
     <Table className="border">
@@ -46,27 +46,25 @@ export default function ViewAllLessonTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {lessonList?.data &&
-          lessonList?.data.data.map((lesson: TLessonList) => (
-            <TableRow key={lesson._id}>
-              <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
-              <TableCell className="">{lesson.title}</TableCell>
-              <VocabularyTotal id={lesson._id} />
-              <TableCell className="text-right">
-                <div className="space-x-2">
-                  <LessonEditDialog
-                    isOpen={open}
-                    setIsOpen={setOpen}
-                    lesson={lesson}
-                  />
-                  <AlertModal
-                    mainPathWithItemId={`${APIeEndPoints.lesson}/${lesson._id}`}
-                    revalidationPath={APIeEndPoints.lesson}
-                  />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+        {getLesson?.data &&
+          getLesson.data.map((lesson: TLessonList) => {
+            return (
+              <TableRow key={lesson._id}>
+                <TableCell className="font-medium">{lesson.lessonNo}</TableCell>
+                <TableCell className="">{lesson.title}</TableCell>
+                <VocabularyTotal id={lesson._id} />
+                <TableCell className="text-right">
+                  <div className="space-x-2">
+                    <LessonEditDialog lesson={lesson} />
+                    <AlertModal
+                      mainPathWithItemId={`${APIeEndPoints.lesson}/${lesson._id}`}
+                      revalidationPath={APIeEndPoints.lesson}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
       </TableBody>
     </Table>
   );

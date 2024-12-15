@@ -23,7 +23,7 @@ const TutorialCard = () => {
   return (
     <div className="px-0 md:px-10">
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-3 w-full">
-        {tutorials.data.length ? (
+        {tutorials?.data?.length ? (
           tutorials.data.map((tutorial: TTutorialDataType) => (
             <VideoHoverAbleCard
               isHoverAble={false}

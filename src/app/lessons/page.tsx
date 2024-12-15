@@ -19,7 +19,7 @@ export type LessonApiResponse = {
 };
 
 async function LessonPage() {
-  const res = await fetch(`${APIeEndPoints.base_url}${APIeEndPoints.lesson}`);
+  const res = await fetch(`${process.env.API_BASE_URL}${APIeEndPoints.lesson}`);
   const result = (await res.json()) as LessonApiResponse;
 
   return (

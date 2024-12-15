@@ -37,7 +37,6 @@ const AddTutorialComponent = () => {
   const { register, handleSubmit } = useForm<TTutorialFormInputs>();
 
   const onSubmit: SubmitHandler<TTutorialFormInputs> = async (data) => {
-    console.log(data);
     try {
       // Send data to backend
       await trigger(data);

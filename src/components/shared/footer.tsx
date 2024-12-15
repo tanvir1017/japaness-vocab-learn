@@ -56,7 +56,7 @@ function Footer() {
           </div>
           <div className="lg:w-1/3 text-center lg:text-right">
             <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} Design & Developed By{" "}
+              &copy; 2024 Design & Developed By{" "}
               <Link
                 target="_blank"
                 href="https://github.com/tanvir1017?tab=repositories"

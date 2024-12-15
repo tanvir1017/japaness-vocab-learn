@@ -44,8 +44,6 @@ export default function EditLessonForm({
     formState: { errors },
   } = useForm<TInputs>();
 
-  console.log(errors);
-
   // ** Getting the form sumption
   const onSubmit: SubmitHandler<TInputs> = async (data) => {
     try {
